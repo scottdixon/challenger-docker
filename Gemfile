@@ -12,6 +12,8 @@ gem 'rails', '~> 5.1.5'
 gem 'sqlite3'
 # Devise for authentication
 gem 'devise'
+# file uploads
+gem 'carrierwave', '~> 1.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets

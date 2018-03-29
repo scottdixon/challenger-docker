@@ -5,5 +5,15 @@
   <%= @challenge.title %>
 </p>
 
+<p>
+  <strong>Challenge:</strong>
+  <%= @challenge.challenge_url %>
+</p>
+
+<p>
+  <strong>Test:</strong>
+  <%= @challenge.test_url %>
+</p>
+
 <%= link_to 'Edit', edit_challenge_path(@challenge) %> |
 <%= link_to 'Back', challenges_path %>
