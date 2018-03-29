@@ -27,7 +27,10 @@ class SubmissionsController < ApplicationController
     FileUtils.cp('./public'+@submission.submission_url, 'ruby_docker/'+@submission.challenge.challenge_identifier)
     FileUtils.cp('./public'+@submission.challenge.test_url, 'ruby_docker/tests/'+@submission.challenge.test_identifier)
 
-    `cd ruby_docker && docker build -t ruby-challenge -f Dockerfile.production . && docker build -t ruby-challenge-test -f Dockerfile.test .`
+    puts 'Running docker'
+    system('cd ruby_docker && docker build -t ruby-challenge -f Dockerfile.production . && docker build -t ruby-challenge-test -f Dockerfile.test .')
+    puts 'Ran rocker'
+
     @test_output = `docker run --rm ruby-challenge-test`
   end
 
