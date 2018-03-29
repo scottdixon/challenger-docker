@@ -1,5 +1,5 @@
 class SubmissionsController < ApplicationController
-  before_action :set_submission, only: [:show, :edit, :update, :destroy]
+  before_action :set_submission, only: [:show, :edit, :test, :update, :destroy]
 
   # GET /submissions
   # GET /submissions.json
@@ -19,6 +19,16 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions/1/edit
   def edit
+  end
+
+  # GET /submissions/1/test
+  def test
+    # Copy files
+    FileUtils.cp('./public'+@submission.submission_url, 'ruby_docker/'+@submission.challenge.challenge_identifier)
+    FileUtils.cp('./public'+@submission.challenge.test_url, 'ruby_docker/tests/'+@submission.challenge.test_identifier)
+
+    `cd ruby_docker && docker build -t ruby-challenge -f Dockerfile.production . && docker build -t ruby-challenge-test -f Dockerfile.test .`
+    @test_output = `docker run --rm ruby-challenge-test`
   end
 
   # POST /submissions

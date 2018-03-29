@@ -1,0 +1,6 @@
+FROM ruby:2.5
+
+WORKDIR /usr/src/app
+COPY 01_reverse.rb /usr/src/app/
+
+LABEL license MIT
