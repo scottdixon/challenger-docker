@@ -30,6 +30,7 @@ class SubmissionsController < ApplicationController
     puts 'Running docker'
     system('cd ruby_docker && sudo docker build -t ruby-challenge -f Dockerfile.production . && sudo docker build -t ruby-challenge-test -f Dockerfile.test .')
     puts 'Ran rocker'
+    puts 'SUDO'
 
     @test_output = `sudo docker run --rm ruby-challenge-test`
   end
