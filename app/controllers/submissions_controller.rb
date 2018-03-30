@@ -27,13 +27,8 @@ class SubmissionsController < ApplicationController
     FileUtils.cp('./public'+@submission.submission_url, 'ruby_docker/'+@submission.challenge.challenge_identifier)
     FileUtils.cp('./public'+@submission.challenge.test_url, 'ruby_docker/tests/'+@submission.challenge.test_identifier)
 
-    puts 'Running docker'
-    system('cd ruby_docker && docker build -t ruby-challenge -f Dockerfile.production . && docker build -t ruby-challenge-test -f Dockerfile.test .')
-    puts 'Ran rocker'
-    puts 'WITHOUT SUDO'
-    system('whoami')
-    puts '^ USER'
-
+    # Build container, run tests
+    `cd ruby_docker && docker build -t ruby-challenge -f Dockerfile.production . && docker build -t ruby-challenge-test -f Dockerfile.test .`
     @test_output = `docker run --rm ruby-challenge-test`
   end
 
