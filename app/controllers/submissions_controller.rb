@@ -23,9 +23,22 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions/1/test
   def test
-    # Copy files
-    FileUtils.cp('./public'+@submission.submission_url, 'ruby_docker/lib/'+@submission.challenge.challenge_identifier)
-    FileUtils.cp('./public'+@submission.challenge.test_url, 'ruby_docker/tests/tests.rb')
+
+    # Is it a zip?
+    if File.extname(@submission.submission_url) == '.zip'
+      # Extract
+      Zip::File.open("./public#{@submission.submission_url}") do |zip|
+        zip.each do |file|
+          file.extract("ruby_docker/lib/#{file.name}")
+        end
+      end
+    else
+      # Not a zip, copy single solution file
+      FileUtils.cp("./public#{@submission.submission_url}", "ruby_docker/lib/#{@submission.challenge.challenge_identifier}")
+    end
+
+    # Copy tests from the original challenge
+    FileUtils.cp("./public#{@submission.challenge.test_url}", "ruby_docker/tests/tests.rb")
 
     # Build container, run tests
     system('cd ruby_docker && docker build -t ruby-challenge -f Dockerfile.production . && docker build -t ruby-challenge-test -f Dockerfile.test .')
@@ -34,8 +47,8 @@ class SubmissionsController < ApplicationController
     @submission.save
 
     # Clean up
-    system('rm ruby_docker/lib/*')
-    system('rm ruby_docker/tests/*')
+    system('rm -rf ruby_docker/lib/*')
+    system('rm -rf ruby_docker/tests/*')
   end
 
   # POST /submissions

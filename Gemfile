@@ -12,6 +12,8 @@ gem 'rails', '~> 5.1.5'
 gem 'sqlite3'
 # Devise for authentication
 gem 'devise'
+# Handle zips
+gem 'rubyzip', '>= 1.0.0'
 # file uploads
 gem 'carrierwave', '~> 1.0'
 # Use Puma as the app server
