@@ -28,10 +28,10 @@ class SubmissionsController < ApplicationController
     FileUtils.cp('./public'+@submission.challenge.test_url, 'ruby_docker/tests/'+@submission.challenge.test_identifier)
 
     puts 'Running docker'
-    system('cd ruby_docker && docker build -t ruby-challenge -f Dockerfile.production . && docker build -t ruby-challenge-test -f Dockerfile.test .')
+    system('cd ruby_docker && sudo docker build -t ruby-challenge -f Dockerfile.production . && sudo docker build -t ruby-challenge-test -f Dockerfile.test .')
     puts 'Ran rocker'
 
-    @test_output = `docker run --rm ruby-challenge-test`
+    @test_output = `sudo docker run --rm ruby-challenge-test`
   end
 
   # POST /submissions
