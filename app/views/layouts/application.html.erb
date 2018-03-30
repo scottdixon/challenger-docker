@@ -11,7 +11,7 @@
   <body>
     <nav>
     <% if user_signed_in? %>
-      <%= link_to "Challenges", challenges_path %> |
+      <%= link_to "Challenges (Admin)", challenges_path %> |
       <%= link_to "Submissions", submissions_path %> |
       Logged in as: <%= current_user.email %>
       <%= link_to "Log out", destroy_user_session_path, :method=>'delete' %>
@@ -19,6 +19,8 @@
       <%= link_to "login", new_user_session_path %>
     <% end %>
     </nav>
+
+    <hr>
 
     <%= yield %>
 

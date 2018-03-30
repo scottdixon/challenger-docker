@@ -7,7 +7,7 @@
     <tr>
       <th>Challenge</th>
       <th>Submission</th>
-      <th colspan="3"></th>
+      <th>Result</th>
     </tr>
   </thead>
 
@@ -16,10 +16,7 @@
       <tr>
         <td><%= submission.challenge.title %></td>
         <td><%= submission.submission %></td>
-        <td><%= link_to 'Show', submission %></td>
-        <td><%= link_to 'Edit', edit_submission_path(submission) %></td>
-        <td><%= link_to 'Destroy', submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= link_to 'Test', "/submissions/#{submission.id}/test" %></td>
+        <td><%= submission.passed ? 'passed' : 'failed' %></td>
       </tr>
     <% end %>
   </tbody>

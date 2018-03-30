@@ -1,5 +1,5 @@
 require 'test/unit'
-require_relative '../01_reverse'
+require_relative '../lib/01_reverse'
 
 class ReverseTest < Test::Unit::TestCase
   def test_reverse_string

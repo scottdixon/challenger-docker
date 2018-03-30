@@ -1,5 +1,5 @@
-<%= @submission.challenge.title %>
+<%= @submission.passed ? '✅' : '' %> <%= @submission.challenge.title %>
 
-<pre>
+<pre class="<%= @submission.passed ? 'success' : 'failure' %>">
 <%= @test_output %>
 </pre>

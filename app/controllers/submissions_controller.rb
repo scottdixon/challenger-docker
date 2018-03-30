@@ -24,12 +24,18 @@ class SubmissionsController < ApplicationController
   # GET /submissions/1/test
   def test
     # Copy files
-    FileUtils.cp('./public'+@submission.submission_url, 'ruby_docker/'+@submission.challenge.challenge_identifier)
-    FileUtils.cp('./public'+@submission.challenge.test_url, 'ruby_docker/tests/'+@submission.challenge.test_identifier)
+    FileUtils.cp('./public'+@submission.submission_url, 'ruby_docker/lib/'+@submission.challenge.challenge_identifier)
+    FileUtils.cp('./public'+@submission.challenge.test_url, 'ruby_docker/tests/tests.rb')
 
     # Build container, run tests
-    `cd ruby_docker && docker build -t ruby-challenge -f Dockerfile.production . && docker build -t ruby-challenge-test -f Dockerfile.test .`
+    system('cd ruby_docker && docker build -t ruby-challenge -f Dockerfile.production . && docker build -t ruby-challenge-test -f Dockerfile.test .')
     @test_output = `docker run --rm ruby-challenge-test`
+    @submission.passed = @test_output.include? '100% passed'
+    @submission.save
+
+    # Clean up
+    system('rm ruby_docker/lib/*')
+    system('rm ruby_docker/tests/*')
   end
 
   # POST /submissions
@@ -39,7 +45,7 @@ class SubmissionsController < ApplicationController
 
     respond_to do |format|
       if @submission.save
-        format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
+        format.html { redirect_to "/submissions/#{@submission.id}/test" }
         format.json { render :show, status: :created, location: @submission }
       else
         format.html { render :new }
