@@ -15,7 +15,7 @@ gem 'devise'
 # Handle zips
 gem 'rubyzip', '>= 1.0.0'
 # file uploads
-gem 'carrierwave', '~> 1.0'
+gem 'carrierwave', '~> 1.3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
